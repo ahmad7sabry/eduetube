@@ -1,65 +1,66 @@
 import 'package:flutter/material.dart';
-import 'package:edutube/pages/explore_page.dart';
-import 'package:edutube/pages/my_courses_page.dart';
-import 'package:edutube/pages/learning_paths_page.dart';
-import 'package:edutube/pages/search_page.dart';
-import 'package:edutube/pages/profile_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key}); // ✅ const constructor
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _pages = [
-    const ExplorePage(),
-    const MyCoursesPage(),
-    const LearningPathsPage(),
-    const ProfilePage(),
+  final List<Map<String, String>> courses = const [
+    {
+      'title': 'Flutter for Beginners',
+      'description': 'Learn the basics of Flutter.',
+      'thumbnail': 'https://img.youtube.com/vi/1ukSR1GRtMU/0.jpg',
+    },
+    {
+      'title': 'Advanced Dart',
+      'description': 'Master Dart programming.',
+      'thumbnail': 'https://img.youtube.com/vi/AqCMFXEmf3w/0.jpg',
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('EduTube Courses'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const SearchPage()),
-              );
-            },
-          ),
-        ],
+        title: const Text(
+          'Eduetube',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.deepPurple,
       ),
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
+      body: ListView.builder(
+        itemCount: courses.length,
+        itemBuilder: (context, index) {
+          final course = courses[index];
+          return Card(
+            margin: const EdgeInsets.all(12),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ListTile(
+              contentPadding: const EdgeInsets.all(12),
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.network(
+                  course['thumbnail']!,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              title: Text(
+                course['title']!,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              subtitle: Text(course['description']!),
+              trailing: const Icon(
+                Icons.play_circle_fill,
+                color: Colors.deepPurple,
+              ),
+              onTap: () {
+                // TODO: Navigate to video list or course detail page
+              },
+            ),
+          );
         },
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'My Courses',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.route),
-            label: 'Learning Paths',
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
       ),
     );
   }
