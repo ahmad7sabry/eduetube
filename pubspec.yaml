@@ -10,12 +10,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  youtube_player_flutter: ^8.1.2
+  youtube_player_flutter: ^9.1.1
   shared_preferences: ^2.2.2
   timeago: ^3.6.1
   provider: ^6.1.2
   http: ^1.1.0
   cached_network_image: ^3.3.1
+  firebase_core: ^2.15.0
+  firebase_auth: ^4.7.2
+  cloud_firestore: ^4.8.4
+  # For web specifically
+  firebase_core_web: ^2.6.0
+  cloud_firestore_web: ^3.6.3
+  youtube_player_iframe: ^4.0.4
 
 dev_dependencies:
   flutter_test:
